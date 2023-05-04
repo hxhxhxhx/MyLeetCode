@@ -4,17 +4,16 @@ import com.huaxiti.LeetCode100.lisi;
 import com.huaxiti.login.Login;
 import com.huaxiti.login.Student;
 import com.huaxiti.login.zhangsan;
+import org.apache.commons.lang3.StringUtils;
+import okhttp3.*;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.awt.event.ActionListener;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiFunction;
 
 public class testB {
 
@@ -119,9 +118,10 @@ public class testB {
         lisi l = new lisi();
         List<String> name = new ArrayList<>();
         name.add("aa");
-        name.stream().map(Student::new);
-        String n = "aaa";
-        int i = 0;
+        name.add("bb");
+        String kString = name.toString();
+        String key = kString.substring(1,kString.length()-1);
+        System.out.println(key);
 
     }
 
@@ -133,5 +133,44 @@ public class testB {
         System.out.println(Math.max(10, '5'));
         matrix[i][j] =
                 (char) (Math.min(Math.min((int)matrix[i-1][j],(int)matrix[i][j-1]),(int)matrix[i-1][j-1]) +1);
+    }
+
+
+    @Test
+    public void test6() throws IOException {
+//        System.out.println(Arrays.toString(new OkHttpClient().getClass().getDeclaredFields()));
+        System.out.println(getWorkScore("", "", ""));
+    }
+    private final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    public Map<String, Object> getWorkScore(String directions, String keywords, String content) throws IOException {
+        Map<String, Object> map = new HashMap<>();
+        HashMap<String, String> map1 = new HashMap<>();
+        map1.put("directions", directions);
+        map1.put("keywords", keywords);
+        map1.put("content", content);
+        Request request = new Request.Builder()
+                .post(RequestBody.create(JSON, OBJECT_MAPPER.writeValueAsString(map1)))
+                .header("authtoken","bingoenglish")
+                .url("http://zju.axiaoyuan.com:8090/writing/judge")
+                .build();
+        OkHttpClient okHttpClient = new OkHttpClient();
+        OkHttpClient build = okHttpClient.newBuilder().build();
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            if (response.body() != null) {
+                String bodyStr = response.body().string();
+//                log.info("getWorkScore[{}] response: {}", response.request().url().query(), bodyStr);
+                //获取成功
+                HashMap<String,Object> hashMap = new ObjectMapper().readValue(bodyStr, HashMap.class);
+                HashMap data = (HashMap)hashMap.get("data");
+                if(data.get("score") != null && data.get("remark") != null){
+                    return data;
+                }
+            }
+//                log.error("getWorkScore request error, path: {}, code: {}, body: {}",
+//                        request.url().query(), response.code(), response.body().string());
+                return map;
+
+        }
     }
 }

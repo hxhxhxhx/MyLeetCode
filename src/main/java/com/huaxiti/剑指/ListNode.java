@@ -1,4 +1,4 @@
-package com.huaxiti.LeetCode100;
+package com.huaxiti.剑指;
 
 import java.util.ArrayList;
 import java.util.Arrays;
