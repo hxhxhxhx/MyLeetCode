@@ -27,7 +27,7 @@ public class tt1 implements tt{
 //        for (;;){
 //
 //        }
-        System.out.println("1111111111111111111111111111");
+        System.out.println("2222222222");
         boolean b = true;
 //        while(b){
 //
