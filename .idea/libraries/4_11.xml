@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="4.11">
+    <CLASSES>
+      <root url="file://$MAVEN_REPOSITORY$/com/squareup/okhttp3/okhttp/4.11.0" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$MAVEN_REPOSITORY$/com/squareup/okhttp3/okhttp/4.11.0" recursive="false" />
+  </library>
+</component>

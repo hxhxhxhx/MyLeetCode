@@ -1,14 +1,9 @@
 package test.jichu;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class testHashSet {
-
-
 
     public static void main(String[] args) {
         Student s1 = new Student(1,"aa");
@@ -20,7 +15,6 @@ public class testHashSet {
         for (Student s: set) {
             System.out.println(s.toString());
         }
-
 
     }
 
